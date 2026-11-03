@@ -33,7 +33,7 @@
 - 分支：main
 - 工作区：`D:\Codex\Agentic_Research_Challenge`
 - 首次推送：2026-11-03
-- 网络提示：本机访问 GitHub 需加 `-c http.version=HTTP/1.1`，否则易出现连接重置
+- 网络提示：本机访问 GitHub 易连接重置，已设 `http.version=HTTP/1.1`（仓库级 `.git/config` + 用户级环境变量 `GIT_CONFIG_COUNT`/`GIT_CONFIG_KEY_0`/`GIT_CONFIG_VALUE_0`）
 
 ## 关键事实速查
 
