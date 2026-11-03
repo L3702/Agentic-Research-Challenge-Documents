@@ -27,6 +27,14 @@
 - 需要精确措辞或补充细节时，查 `sources/official-site/` 下的文字快照。
 - 资料更新后，同步修改对应主题文件，并更新本文件与主题文件底部的「最后更新」时间。
 
+## 仓库信息
+
+- 远端：https://github.com/L3702/Agentic-Research-Challenge-Documents
+- 分支：main
+- 工作区：`D:\Codex\Agentic_Research_Challenge`
+- 首次推送：2026-11-03
+- 网络提示：本机访问 GitHub 需加 `-c http.version=HTTP/1.1`，否则易出现连接重置
+
 ## 关键事实速查
 
 - 报名：2026-10-19 至 2026-11-08（进行中，不限额）
