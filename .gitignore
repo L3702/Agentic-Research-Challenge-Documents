@@ -10,6 +10,9 @@ desktop.ini
 *.bak
 *$*
 
+# 本地探针与临时输出
+tmp_*
+
 # Python
 __pycache__/
 *.py[cod]
