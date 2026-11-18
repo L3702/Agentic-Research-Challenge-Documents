@@ -1,0 +1,13 @@
+{
+  "mpr_pdf_success_rate": 1.0,
+  "mpr_text_success_rate": 1.0,
+  "mpr_text_min_chars_pass_rate": 1.0,
+  "industry_assets": 3,
+  "benchmark_assets": 1,
+  "price_rows": 1813,
+  "missing_rate_all_assets": 0.0016519823788546256,
+  "date_alignment_success_rate": 1.0,
+  "event_return_cell_coverage": 1.0,
+  "duplicate_date_groups": 0,
+  "script_sha256": "2c0bc3048ae03f2eab192c24f2fd73207ba06e5ae835aa5d0ff594b512053b35"
+}
