@@ -55,9 +55,11 @@ DEFAULT_DICT = "data/external/mpr_sentiment_dict.csv"
 NEGATORS = ("不", "没", "无", "未", "非", "否", "别", "勿", "莫", "难以", "并未", "不再", "不会", "不能")
 
 # P 段标题的候选写法（取最后出现的一次，避开目录）
+# 锚点规则：与论文所用 sentiment.csv 完全一致（见 docs/可复现说明.md 第六节）
+# 2003–2004 年 4 期报告章节写法不同，本规则未覆盖，论文按数据限制如实说明
 P_HEAD_PATTERNS = [
-    r"货币政策趋势",          # 2005 年后报告"第五部分"的标题
-    r"预测与政策建议",        # 2001–2004 年报告
+    r"货币政策趋势",          # 2005 年后"第五部分"的标题
+    r"预测与政策建议",        # 2001–2002 部分年份
     r"下一阶段[^\n]{0,12}政策思路",
     r"下一阶段货币政策",
     r"政策建议",
@@ -333,6 +335,7 @@ def main() -> int:
     ap.add_argument("--backend", default="auto", choices=["auto", "pypdf", "pymupdf", "builtin"])
     ap.add_argument("--limit", type=int, default=0, help="只跑前 N 期（调试用）")
     ap.add_argument("--demo-dict", action="store_true", help="用内置演示小词典自测")
+    ap.add_argument("--out", default=OUT_CSV, help="输出 CSV 路径（换词典做稳健性时用另一个文件名）")
     args = ap.parse_args()
 
     if args.demo_dict:
@@ -417,8 +420,8 @@ def main() -> int:
                "pos_R", "neg_R", "pos_P", "neg_P", "tone_R", "tone_P", "tone_all",
                "z_tone_R", "z_tone_P", "z_tone_all", "status", "anchor"]
     df = df[[c for c in ordered if c in df.columns]].sort_values("period")
-    os.makedirs(os.path.dirname(OUT_CSV), exist_ok=True)
-    df.to_csv(OUT_CSV, index=False, float_format="%.6f")
+    os.makedirs(os.path.dirname(args.out), exist_ok=True)
+    df.to_csv(args.out, index=False, float_format="%.6f")
 
     # ---------------- 诊断 ----------------
     bad = df[(df["status"] != "ok") | (df["chars"] < 8000) | (df["chars_P"] < 500)]
@@ -438,7 +441,7 @@ def main() -> int:
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines))
 
-    print(f"[完成] 写出 {OUT_CSV}（{len(df)} 行）与 {OUT_MD}")
+    print(f"[完成] 写出 {args.out}（{len(df)} 行）与 {OUT_MD}")
     print(f"       分段成功 {int((df['status'] == 'ok').sum())}/{len(df)}；"
           f"R-P 相关 {corr:.3f}")
     if len(bad):

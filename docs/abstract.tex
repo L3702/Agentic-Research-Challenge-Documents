@@ -1,0 +1,87 @@
+% =====================================================================
+% 摘要与关键词
+% ---------------------------------------------------------------------
+% 用法：放入主文档 \begin{document} 之后、正文之前：
+%     \input{abstract}
+% 适用 ctexart / ctexbook。若需英文摘要，把下面的 english 部分放在正文末尾。
+% 依赖：无额外宏包（ctex 自带 abstract 环境）
+% =====================================================================
+
+\begin{abstract}
+\noindent
+央行《货币政策执行报告》是市场识别政策意图的主要书面渠道。已有研究确认报告文本
+情绪对股市整体收益具有解释力，并指出真正起作用的是面向未来的政策指引而非宏观回顾；
+但这些结论多以宽基指数为对象，较少讨论不同制度阶段是否一致。
+
+本文以 2001 年第一季度至 2026 年第二季度共 102 期报告为样本，采用中文金融情感词典
+与情感单元法，分别度量政策指引段与宏观回顾段的情绪；以 16 个申万一级行业的等权组合
+构造事件窗收益与波动指标，考察报告发布后一日与五日内的市场反应。
+
+估计结果显示，政策指引段情绪对发布后的收益方向没有稳健影响，却显著降低事件日的市场
+波动：情绪每提高一个标准差，日内振幅下降 15 至 28 个基点（取决于是否包含金融危机年份），
+控制发布前波动状态后为 15 至 19 个基点；该结果在 28 行业口径、500 次置换检验与
+政策操作控制下均保持稳健，而宏观回顾段情绪无此效应。分时段来看，波动效应集中于
+2014 年以前；2014 年以后情绪与发布后收益转为负相关，但这一方向性结果对危机年份高度
+敏感，本文仅将其作为提示性证据。
+
+上述发现意味着，央行书面沟通的作用首先体现在收敛市场分歧，而非改变价格方向，且这种
+作用随货币政策框架的调整而变化。若把不同时期、不同文本段落视为同质样本处理，方向相反
+的两类效应会相互抵消，容易得出沟通无效的错误判断。
+\end{abstract}
+
+\vspace{0.5em}
+\noindent\textbf{关键词：}货币政策执行报告；文本情绪；市场波动；结构断点；事件研究
+
+\vspace{0.3em}
+\noindent\textbf{JEL 分类号：}E52；E58；G14
+
+% ---------------------------------------------------------------------
+% 英文摘要（按需保留；若期刊或赛事不要求可删去）
+% ---------------------------------------------------------------------
+\clearpage
+\renewcommand{\abstractname}{Abstract}
+\begin{abstract}
+\noindent
+The Monetary Policy Report (MPR) published by the People's Bank of China is the
+primary written channel through which policy intentions are communicated to the
+market. Existing studies have established that the tone of the MPR explains
+aggregate stock market returns, and that the forward-looking policy guidance
+rather than the macroeconomic review drives this reaction. Most of this evidence,
+however, rests on broad market indices, and whether it holds across institutional
+periods has received little attention. Using 102 quarterly reports from 2001Q1 to
+2026Q2 and a Chinese financial sentiment dictionary, we measure the tone of the two
+segments separately. Market reactions are measured with event-window returns and
+volatility constructed from an equal-weighted portfolio of 16 Shenwan level-1
+industries.
+
+We find no robust effect of policy guidance tone on the direction of post-release
+returns, but a significant reduction in announcement-day volatility: a one
+standard deviation increase in tone lowers the intraday range by 15 to 28 basis
+points, depending on whether crisis years are included, and by 15 to 19 basis
+points after controlling for pre-announcement volatility. The result survives an
+alternative 28-industry market definition, a 500-draw permutation test, and
+controls for reserve requirement ratio cuts, LPR cuts and reverse repo rate cuts,
+while the tone of the macroeconomic review shows no such effect. The volatility
+effect is concentrated before 2014; after 2014 the relation between tone and
+returns turns negative, but this directional result is highly sensitive to crisis
+years and is therefore reported as suggestive evidence.
+
+These findings suggest that written central bank communication primarily reduces
+disagreement rather than moving prices, and that its effect is not constant but
+varies with the monetary policy framework. Treating heterogeneous periods and text
+segments as a homogeneous sample may cancel out effects of opposite sign and lead
+to the misleading conclusion that communication does not matter.
+\end{abstract}
+
+\vspace{0.5em}
+\noindent\textbf{Keywords:} Monetary Policy Report; textual sentiment; market volatility;
+structural break; event study
+
+% ---------------------------------------------------------------------
+% 写作依据（仅供团队核对，不进入排版）
+%   "面向未来的政策指引而非宏观回顾"        → 姜富伟等（2021）的核心结论
+%   前瞻性/回顾性分段的处理思路              → 王辉等（2023）；蒋海等（2025）
+%   文本度量对词典与设定的敏感性（稳健性）    → 林建浩、孙乐轩（2025）
+%   "信息效应"而非单纯冲击的分析框架          → 王熙、郑梦圆（2021）
+%   行业事件窗与行业面板做法                  → 游庭玮（2026）；王春芝（2022）；周亮（2018）
+% ---------------------------------------------------------------------

@@ -1,0 +1,53 @@
+% =====================================================================
+% 主文档：央行书面沟通影响收益还是波动？
+% ---------------------------------------------------------------------
+% 编译：xelatex main.tex  （需两次，以生成交叉引用）
+% 依赖：ctex、booktabs、threeparttable、amsmath、geometry、chngcntr、
+%       hyperref
+% 结构：abstract.tex 为摘要（含英文），ch1--ch6 为正文，
+%       references.tex 为参考文献。
+% =====================================================================
+
+\documentclass[12pt, a4paper]{ctexart}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{chngcntr}
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue]{hyperref}
+
+% 让表、图、公式按节编号（正文引用为 表 5.2、式 (4.3) 这类格式）
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+\counterwithin{equation}{section}
+
+\linespread{1.35}
+\setlength{\parskip}{0.25em}
+
+\title{\textbf{央行书面沟通影响收益还是波动？}\\[4pt]
+\large 来自 102 期《货币政策执行报告》文本情绪的证据}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\input{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\input{ch1_intro}
+\input{ch2_literature}
+\input{ch3_data}
+\input{ch4_design}
+\input{ch5_empirical}
+\input{ch6_conclusion}
+
+\newpage
+\input{references}
+
+\end{document}
