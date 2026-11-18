@@ -1,0 +1,16 @@
+﻿dictionary_1,dictionary_2,metric,n,correlation,pvalue
+ntusd_simplified,dlut,pearson,103,0.8291387373559439,2.9521518058113904e-27
+ntusd_simplified,dlut,spearman,103,0.843550937925581,5.038711807617239e-29
+ntusd_simplified,dlut,kendall,103,0.6573386636207882,7.609017584107168e-23
+ntusd_simplified,dlut,sign_agreement_nonzero,103,1.0,
+ntusd_simplified,dlut,sign_agreement_all,103,1.0,
+ntusd_simplified,mpr_domain,pearson,103,0.34923422837098583,0.00029962591381029916
+ntusd_simplified,mpr_domain,spearman,103,0.3628266343054859,0.00016552441138273266
+ntusd_simplified,mpr_domain,kendall,103,0.265016659934682,7.290821737038225e-05
+ntusd_simplified,mpr_domain,sign_agreement_nonzero,103,1.0,
+ntusd_simplified,mpr_domain,sign_agreement_all,103,1.0,
+dlut,mpr_domain,pearson,103,0.24009722343359902,0.014572686665893264
+dlut,mpr_domain,spearman,103,0.23381209037805697,0.017453081481901618
+dlut,mpr_domain,kendall,103,0.17820085754228618,0.007648843831891989
+dlut,mpr_domain,sign_agreement_nonzero,103,1.0,
+dlut,mpr_domain,sign_agreement_all,103,1.0,

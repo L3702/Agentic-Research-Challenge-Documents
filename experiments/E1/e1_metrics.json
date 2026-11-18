@@ -1,0 +1,14 @@
+{
+  "mpr_issues": 103,
+  "mpr_pdf_success": 103,
+  "mpr_text_success_or_cached": 103,
+  "mpr_text_min_chars_pass": 103,
+  "dictionaries": 3,
+  "dictionary_scores_rows": 309,
+  "validation_sample_reports": 15,
+  "human_ratings_completed": 0,
+  "unmatched_terms": 17883,
+  "anomaly_records": 0,
+  "seed": 20261118,
+  "script_sha256": "51cfb6a82b24d8370e843924207ccd795649fd7b9756e7b2efbf0a5779e346af"
+}

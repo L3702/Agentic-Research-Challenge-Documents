@@ -12,6 +12,7 @@ desktop.ini
 
 # 本地探针与临时输出
 tmp_*
+_temp/
 
 # Python
 __pycache__/
