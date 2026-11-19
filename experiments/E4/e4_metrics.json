@@ -1,0 +1,33 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "pandas": "3.0.5",
+    "numpy": "2.5.2",
+    "scipy": "scipy.stats:unknown"
+  },
+  "industry_rows": 144429,
+  "industry_count": 31,
+  "benchmark_source": "workspace_cache:_temp/e0_market_raw/benchmark_sh000300.csv",
+  "mpr_issues": 103,
+  "panel_rows": 2274,
+  "n_target_quarters": 102,
+  "panel_first_quarter": "2001Q2",
+  "panel_last_quarter": "2026Q3",
+  "min_n_industries": 16,
+  "max_n_industries": 31,
+  "train_start": "2001Q2",
+  "train_end": "2015Q4",
+  "val_start": "2016Q1",
+  "val_end": "2020Q4",
+  "test_start": "2021Q1",
+  "test_end": "2026Q3",
+  "fmb_result_rows": 35,
+  "coefficient_rows": 3349,
+  "oos_metric_rows": 8,
+  "panel_robustness_rows": 15,
+  "fmb_skipped_cells": 25,
+  "conclusion": "主词典 `ntusd_simplified` 的 `sent_exposure` 在测试集上未同时优于无文本 Baseline：IC=-0.0169 vs -0.0384，OOS R²=-0.6041 vs -0.5621，MAE=0.08734 vs 0.08558。因此 H2 的预测部分未获支持；共同情绪不能直接识别行业横截面差异，滚动情绪暴露设定也未提供稳定增量。",
+  "script_sha256": "7e11e45d4793e7133698ee91b1bb1febd590e24cfb545e8f71004cdc5f9651ed",
+  "seed": 20261119,
+  "nw_lag": 2
+}
