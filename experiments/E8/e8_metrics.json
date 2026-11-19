@@ -1,0 +1,37 @@
+{
+  "run_at": "2026-11-19T21:10:23.184472+08:00",
+  "as_of_date": "2026-11-19",
+  "cache_reuse": false,
+  "git_commit": "acbc6bc87f8683cb6d03885e4d3f24a150910a62",
+  "python": "3.14.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "pandas": "3.0.5",
+  "numpy": "2.5.2",
+  "scipy": "1.18.1",
+  "matplotlib": "3.11.2",
+  "seed": 20261119,
+  "n_settings": 49,
+  "status_counts": {
+    "ok": 39,
+    "limited": 10
+  },
+  "failure_records": 19876,
+  "sources_verified": 4,
+  "raw_significant": 3,
+  "bh_significant": 0,
+  "holm_significant": 0,
+  "script_sha256": {
+    "e8_event.py": "8fd1fb962a9970bee03d22663ea4d21fe96e46d04ca61f959a4f2cb8cdd7e4c0",
+    "e8_prediction.py": "667ed4dea9c383c790afd725cb7d06014a5eb9612424048716d9f9ec5fcb5b16",
+    "run_e8.py": "4c4bb712e7d69fd7b7ba73f3e6c78125605e4d37e5e671a5521512959b37035c",
+    "test_e8_event.py": "9e3239612e92de2a4b243adeea2c01a0c5b87a82d46d744fb8239bef36011ed2",
+    "test_e8_prediction.py": "f9e3f4f4a5137c4a094a4d87e8e6dd837db4cef1e9e7c6203f416a335a86bcb5",
+    "test_e8_report.py": "4e65636d80dbfa1fb9ab7c6030868264b6fa0d4b7a57742e0f3dff13df1a0239"
+  },
+  "no_existing_input_modified": true,
+  "primary_effect_p_families": {
+    "event_all_settings": 23,
+    "prediction_legacy_all_settings": 13,
+    "prediction_strict_all_settings": 13
+  }
+}
