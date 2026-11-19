@@ -1,0 +1,27 @@
+{
+  "experiment": "E5",
+  "run_date": "2026-11-19",
+  "script_sha256": "db4e71a44715bfee70367b22010b5f2edd397ea89738a127448976eab9866a10",
+  "seed": 20261119,
+  "n_boot": 10000,
+  "main_spec": {
+    "model": "market",
+    "event_window": 1,
+    "dictionary": "ntusd_simplified"
+  },
+  "industry_count": 31,
+  "event_count": 89,
+  "sens_mean": -0.0281036831252458,
+  "sens_median": -0.028811741211682732,
+  "sens_std": 0.019993468046089608,
+  "sens_min": -0.06430478914249332,
+  "sens_max": 0.01730720683397698,
+  "subsample_rho": 0.03529411764705882,
+  "subsample_sign_agree": 0.3870967741935484,
+  "significant_cross_section_terms_10pct": [],
+  "significant_univariate_terms_10pct": [
+    "rate_sens",
+    "fin_sens"
+  ],
+  "significant_panel_interactions_10pct": []
+}
