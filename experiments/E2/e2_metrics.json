@@ -1,0 +1,19 @@
+{
+  "industry_rows": 144429,
+  "benchmark_rows": 6033,
+  "benchmark_source": "workspace_cache:_temp/e0_market_raw/benchmark_sh000300.csv",
+  "mpr_issues": 103,
+  "sentiment_rows": 309,
+  "rf_rows": 6213,
+  "dropped_event_issues": 3,
+  "skipped_cells": 5851,
+  "observation_rows": 32616,
+  "period_rows": 3092,
+  "summary_rows": 264,
+  "polluted_issues": 17,
+  "main_periods": 89,
+  "significance_note": "全样本市场模型显著事件窗：[0,+10] p=0.0409；低情绪组显著事件窗：[0,+1] p=0.0219；高-低差值显著事件窗：[0,+1] p=0.0113；均值调整模型全样本显著事件窗：无。其余事件窗/组均不显著，如实记录，不做因果解释。",
+  "script_sha256": "329a5b59e2b0939af840fcf469e9fe58a1e3b97cc5bb28bb83062ba77640c4c6",
+  "seed": 20261119,
+  "n_boot": 10000
+}
