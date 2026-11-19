@@ -1,0 +1,11 @@
+{
+  "target_quarters": 42,
+  "start": "2016Q2",
+  "end": "2026Q3",
+  "signal_rows": 1194,
+  "factor_complete_quarters": 40,
+  "main_net_annual_return": -0.046084989355518635,
+  "main_alpha_annualized": 0.026475607228563236,
+  "main_alpha_t": 0.46078596653855014,
+  "script_sha256": "2cbbab2ec8d9719a02617fdb2a480cd998fe92cf6ad48c5100497f1039b6e738"
+}
