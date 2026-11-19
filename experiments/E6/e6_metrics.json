@@ -1,0 +1,29 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "pandas": "3.0.5",
+    "numpy": "2.5.2",
+    "scipy": "scipy.stats:unknown"
+  },
+  "llm_model": "qwen3.8-27b",
+  "prompt_version": "v1",
+  "temperature": 0.0,
+  "llm_issues": 103,
+  "panel_rows": 2274,
+  "n_target_quarters": 102,
+  "panel_first_quarter": "2001Q2",
+  "panel_last_quarter": "2026Q3",
+  "train_start": "2001Q2",
+  "train_end": "2015Q4",
+  "val_start": "2016Q1",
+  "val_end": "2020Q4",
+  "test_start": "2021Q1",
+  "test_end": "2026Q3",
+  "oos_metric_rows": 12,
+  "coefficient_rows": 5154,
+  "fmb_skipped_cells": 39,
+  "conclusion": "测试集上 LLM 模型 IC=0.0733、OOS R²=-0.6561、MAE=0.09004，词典模型 IC=-0.0169、OOS R²=-0.6041、MAE=0.08734；联合模型中 LLM 系数=-0.02716（NW p=0.6842）。LLM 未同时优于词典且增量系数不显著，H4 未获支持。",
+  "script_sha256": "c71d7e3f7f0f73d162224b3787035dde5dc66c06d8641af2b296adf73664fd22",
+  "seed": 20261119,
+  "nw_lag": 2
+}
