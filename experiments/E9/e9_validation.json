@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "absolute_tolerance": 1e-10,
+  "feature_max_abs_errors": {
+    "sentiment_llm": 0.0,
+    "sent_beta_llm": 4.440892098500626e-16,
+    "sent_beta_llm_z": 3.1086244689504383e-15,
+    "sentiment_llm_z": 4.440892098500626e-16,
+    "sent_x_exposure_llm": 5.773159728050814e-15
+  },
+  "splits": {
+    "validation": {
+      "n_obs": 548,
+      "n_quarters": 20,
+      "ic_mean": -0.014344070961718025,
+      "oos_r2": -2.5109844639740255,
+      "mae": 0.09757895626600652,
+      "prediction_max_abs_error": 3.608224830031759e-16
+    },
+    "test": {
+      "n_obs": 677,
+      "n_quarters": 23,
+      "ic_mean": 0.0732917047620583,
+      "oos_r2": -0.6561176731447547,
+      "mae": 0.09003778346784692,
+      "prediction_max_abs_error": 3.885780586188048e-16
+    }
+  },
+  "source_sha256": {
+    "e6_panel": "7831113a981c6eb3d363e2a348f00c79702118a2d82d7ed6fb16244f8c1bd9ca",
+    "e6_quarterly_returns": "1eba1a7e0f0d9c33d31fcf76778c329a15df3110be5c5f0b56eb96472db54996",
+    "e6_predictions": "6727e11791e87749f6d1a2a965f07f336dab89e1e279f5f062101fce8f481efa",
+    "e6_published_metrics": "6f831d72bf71a893118f6a7454d35f0abeaa2b4e7475530d86fcfec6fe23adfa"
+  },
+  "timing": {
+    "report_issues": 102,
+    "publications_inside_target_quarter": 102,
+    "days_after_target_start_min": 15,
+    "days_after_target_start_max": 64,
+    "days_after_target_start_mean": 40.8921568627451,
+    "prior_coefficient_quarters_before_2016Q1": 52,
+    "prior_coefficient_quarters_before_2021Q1": 72,
+    "prior_coefficient_quarters_before_2026Q3": 94,
+    "interpretation": "E6-compatible retrospective exploratory comparison; target quarterly returns include pre-publication days.",
+    "coefficient_updates": "Expanding quarterly coefficients, including completed validation/test quarters before each forecast.",
+    "r2_reference": "Realized cross-sectional mean within each evaluated target quarter; not an implementable historical-mean forecast."
+  },
+  "analysis_status": "exploratory",
+  "all_source_hashes_verified": true,
+  "selected_raw_records": 587,
+  "snapshot_inventory_files": 594,
+  "parser_policies": [
+    "strict",
+    "e6_lenient",
+    "brace_normalized"
+  ],
+  "baseline_scores_match_e6": true,
+  "formal_human_status_counts": {
+    "pending_human": 15
+  },
+  "true_human_agreement_available": false,
+  "immutable_model_versions_available": false,
+  "transport_failures_not_model_sensitivity": true,
+  "no_score_imputation": true,
+  "no_fallback_nontext_metrics": true,
+  "scientific_completion": "partial_exploratory_human_and_clean_temperature_oos_pending"
+}
