@@ -1,0 +1,58 @@
+[
+  {
+    "input": "图表\\figures\\fig01_research_framework.png",
+    "sha256": "f5c7d99f35aec265cd6933644f6482e14edb50ae5b31caba8febbb177ca5fff8",
+    "output": "figures/fig01_research_framework.png",
+    "removed_top_pixels": 100,
+    "removed_bottom_pixels": 0
+  },
+  {
+    "input": "图表\\figures\\fig14_event_study_car.png",
+    "sha256": "7d227663aa5e9dc9f555bc4d6819aae8309a425c00b93b78b29ae442624b3f83",
+    "output": "figures/fig14_event_study_car.png",
+    "removed_top_pixels": 65,
+    "removed_bottom_pixels": 52
+  },
+  {
+    "input": "图表\\figures\\fig09_risk_return.png",
+    "sha256": "1df0b20e9cdc5668184216e9065d01124b5434c340c842e6fee8de8c7d9bca28",
+    "output": "figures/fig09_risk_return.png",
+    "removed_top_pixels": 95,
+    "removed_bottom_pixels": 0
+  },
+  {
+    "input": "experiments\\E1\\sentiment_dictionary_full.csv",
+    "sha256": "ad6d1e673c4bdc9530e0335276639463a7ff84b7a5517dccfd63bce5e8a67268",
+    "output": "figures/fig13_sentiment.png",
+    "columns": [
+      "publication_date",
+      "sentiment_score",
+      "pos_neg_coverage"
+    ],
+    "filter": {
+      "dictionary": "ntusd_simplified"
+    },
+    "rows": 103
+  },
+  {
+    "input": "experiments\\E5\\e5_heterogeneity.csv",
+    "sha256": "ba6b4edfeccb06ae314a44220649d9861dc7a4c665a909b58ebe421021d1aadb",
+    "output": "figures/fig19_heterogeneity.pdf",
+    "columns": [
+      "name",
+      "sens_main",
+      "sens_main_ci_low",
+      "sens_main_ci_high"
+    ]
+  },
+  {
+    "input": "experiments\\E7\\e7_portfolio.csv",
+    "sha256": "fc94e727122d256d1d92dcbf4e2308ef64a324685a55cf049f4455293aeb409e",
+    "output": "figures/fig18_portfolio_equity.pdf",
+    "columns": [
+      "long_short_net",
+      "baseline_long_short_net",
+      "industry_ew_return"
+    ]
+  }
+]

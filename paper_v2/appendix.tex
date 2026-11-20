@@ -1,0 +1,31 @@
+\FloatBarrier
+\appendix
+\ctexset{section={name={附录\ ,},number=\Alph{section}}}
+\renewcommand{\thesection}{\Alph{section}}
+\section{数据、代码与结果追溯}\label{sec:reproduction}
+
+表\ref{tab:provenance}列出实验产物与论文证据的对应关系。路径以项目根目录为起点。
+
+\begin{table}[!htbp]
+\centering\small
+\caption{主要结论的核验材料}\label{tab:provenance}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+证据 & 核验材料 \\
+\midrule
+报告索引与文本度量 & \path{experiments/E1/mpr_index_full.csv} 记录发布日期、原文链接和 SHA-256。\path{experiments/E1/validation/human_ratings.csv} 保存 15 期抽检分值与评分人登记，每期只有一份评分。\\
+事件研究 & \path{experiments/E2/} 与 \path{experiments/E3/} 留存事件窗结果、估计模型、分组汇总及异常记录。\\
+收益预测与行业异质性 & \path{experiments/E4/e4_oos_metrics.csv}、\path{experiments/E5/e5_cross_section.csv} 和 \path{experiments/E5/e5_stability.csv} 记录预测指标、行业特征的截面估计及跨期稳定性。\\
+大语言模型与组合 & \path{experiments/E6/e6_llm_oos_metrics.csv} 与 \path{experiments/E6/e6_llm_incremental_regression.csv} 对应模型比较。\path{experiments/E7/e7_portfolio.csv} 用于绘制净值曲线，\path{experiments/E7/e7_metrics.json} 对应组合和因子回归。\\
+稳健性与时点核验 & \path{experiments/E8/e8_robustness_summary.csv} 记录时点修正和多重检验。\path{experiments/E8/e8_input_manifest.csv} 记录冻结输入。\\
+LLM 敏感性与失败归因 & \path{experiments/E9/} 中的 \path{e9_response_audit.csv} 和 \path{e9_prompt_model_manifest.json} 登记模型响应、失败原因与调用配置。\\
+误差与异常审计 & \path{experiments/E10/} 中的 \path{e10_error_analysis.md} 和 \path{e10_anomaly_samples.csv} 记录误差分析与生成时的异常快照。\\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize 注：\path{_temp/} 下的完整报告缓存、宏观与利率缓存、外部因子文件及原始模型响应不随仓库分发。}
+\end{table}
+
+完整报告文本可按 E1 索引重取，项目保留 E0 的五期样本供检查。指数行情获取方式与缺失记录见《数据来源说明》。接口软件的开源许可与上游行情、词典及政策文本的再分发权限分别适用。原始模型响应、宏观与利率缓存及外部因子镜像位于本地缓存。跨环境复现需要重新获取相应输入并对照冻结清单和哈希。采用同名模型重新调用时，评分可能随服务端修订而变化。
+
+图表由项目的图表目录下的绘图脚本生成。实验图表输入可由 \path{build_experiment_inputs.py} 从既有输出汇总。正文对比指标优先使用各实验明确标记的共同样本。复算时应同时核对收益窗口、截面基准及拟合时点。

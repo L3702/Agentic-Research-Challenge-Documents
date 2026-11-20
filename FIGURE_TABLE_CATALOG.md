@@ -57,6 +57,8 @@
 | 事件研究输出（E3） | experiments/E3/e3_car_by_sentiment.csv、e3_event_results.csv | 89 个主样本事件 | Fig 14/15、Table 11 |
 | 横截面预测输出（E4） | experiments/E4/e4_coefficient_series.csv、e4_fmb_results.csv | 102 个目标季 | Fig 16/17、Table 10/11 |
 | 多空组合输出（E7） | experiments/E7/e7_portfolio.csv | 42 个目标季 | Fig 18 |
+
+论文修订稿的组合净值图使用 `experiments/E7/e7_portfolio.csv` 的完整 E7 输出，由 `paper_v2/prepare_figures.py` 重绘。`图表/results/e7_portfolio.csv` 是早期图表使用的 5 列历史绘图摘录，仅保留信号组合的分腿/净收益和同池等权收益。
 | 行业敏感度输出（E5） | experiments/E5/e5_heterogeneity.csv | 31 个行业 | Fig 19 |
 | 稳健性输出（E8） | experiments/E8/e8_robustness_summary.csv | 49 个设定 | Fig 20 |
 

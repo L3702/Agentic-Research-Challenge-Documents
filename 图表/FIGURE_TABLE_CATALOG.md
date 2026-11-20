@@ -25,7 +25,7 @@
 | Fig 15 | fig15_event_heatmap.png | plot_event_heatmap.py | 图表/results/e3_event_results.csv | 2026-11-20 14:33 | 已生成 | 行业 × 事件窗 CAR 热力图 |
 | Fig 16 | fig16_fmb_coefficient.png | plot_fmb.py | 图表/results/e4_coefficient_series.csv | 2026-11-20 14:33 | 已生成 | Fama-MacBeth 情绪系数时序 |
 | Fig 17 | fig17_oos_metrics.png | plot_oos.py | 图表/results/e4_oos_metrics.csv | 2026-11-20 14:33 | 已生成 | 样本外 IC / ICIR / OOS R² |
-| Fig 18 | fig18_portfolio_equity.png | plot_portfolio.py | 图表/results/e7_portfolio.csv | 2026-11-20 14:33 | 已生成 | 多空组合累计净值 |
+| Fig 18 | fig18_portfolio_equity.png | plot_portfolio.py | 图表/results/e7_portfolio.csv（历史绘图摘录） | 2026-11-20 14:33 | 已生成 | 多空组合累计净值 |
 | Fig 19 | fig19_heterogeneity.png | plot_heterogeneity.py | 图表/results/e5_heterogeneity.csv | 2026-11-20 14:33 | 已生成 | 行业敏感度排序与置信区间 |
 | Fig 20 | fig20_robustness.png | plot_robustness.py | 图表/results/e8_robustness_summary.csv | 2026-11-20 14:33 | 已生成 | 稳健性森林图 |
 
@@ -46,6 +46,8 @@
 | Table 11 | table11_statistical_results.md/.csv | build_tables.py | E4/e4_fmb_results.csv、E3/e3_car_by_sentiment.csv、E4/e4_panel_robustness.csv | 2026-11-20 14:33 | 已生成 | 统计分析结果（FMB 系数/t/R²/样本量） |
 
 ## 3. 数据源
+
+`图表/results/e7_portfolio.csv` 是历史图表使用的 5 列绘图摘录。论文修订稿使用完整 E7 输出 `experiments/E7/e7_portfolio.csv`，由 `paper_v2/prepare_figures.py` 重绘净值图。
 
 | 数据 | 路径 | 范围 | 用途 |
 |------|------|------|------|

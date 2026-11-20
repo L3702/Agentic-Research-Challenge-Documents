@@ -1,0 +1,124 @@
+\documentclass[UTF8,zihao=-4,fontset=fandol,a4paper]{ctexart}
+\usepackage[a4paper,left=23mm,right=23mm,top=21mm,bottom=22mm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,tabularx,array,graphicx,caption,multicol,placeins}
+\usepackage[backend=biber,style=gb7714-2025,sorting=none,doi=true]{biblatex}
+\addbibresource{literature.bib}
+\addbibresource{methods.bib}
+\usepackage[unicode,hidelinks,bookmarksnumbered]{hyperref}
+\urlstyle{same}
+\graphicspath{{figures/}}
+
+\newcommand{\papertitle}{央行货币政策执行报告文本情绪与 A 股行业收益}
+\newcommand{\papersubtitle}{度量、预测与异质性检验}
+\hypersetup{pdftitle={\papertitle{}：\papersubtitle},pdfauthor={王文楠，李享晨，何卓宁},pdfsubject={智能体科研创新挑战赛论文修订稿}}
+\ctexset{
+  section={name={第,章},number=\chinese{section},format=\Large\bfseries,beforeskip=1.25ex,afterskip=0.85ex},
+  subsection={number=\arabic{section}.\arabic{subsection},format=\large\bfseries,beforeskip=1.05ex,afterskip=0.45ex},
+  subsubsection={number=\arabic{section}.\arabic{subsection}.\arabic{subsubsection},format=\normalsize\bfseries,beforeskip=0.8ex,afterskip=0.3ex}
+}
+\captionsetup{font=small,labelfont=bf,labelsep=quad,skip=4pt}
+\captionsetup[table]{position=above}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{9pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\setlength{\emergencystretch}{2em}
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{3}
+\renewcommand{\topfraction}{0.84}
+\renewcommand{\bottomfraction}{0.74}
+\renewcommand{\textfraction}{0.13}
+\raggedbottom
+\newcommand{\paperfigure}[4]{%
+  \begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=#4\linewidth,height=0.42\textheight,keepaspectratio]{#1}
+    \caption{#2}\label{#3}
+  \end{figure}}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \vspace*{22mm}
+  {\zihao{3}\bfseries 山东财经大学\par}
+  \vspace{5mm}
+  {\zihao{4} 首届智能体科研创新挑战赛\par}
+  {\large Agentic Research Challenge 2026\par}
+  \vspace{12mm}
+  {\small 经济金融与社会科学智能分析赛道\quad 本科生组\par}
+  \vspace{18mm}
+  \rule{0.90\textwidth}{0.6pt}\par
+  \vspace{8mm}
+  {\zihao{1}\bfseries 央行货币政策执行报告\par}
+  \vspace{3mm}
+  {\zihao{1}\bfseries 文本情绪与 A 股行业收益\par}
+  \vspace{5mm}
+  {\zihao{3}\papersubtitle\par}
+  \vspace{7mm}
+  \rule{0.90\textwidth}{0.6pt}\par
+  \vspace{14mm}
+  {\zihao{-4}
+  \renewcommand{\arraystretch}{1.36}
+  \begin{tabular}{@{}r@{\hspace{1.4em}}l@{}}
+    队名 & 秋珊百绘 \\
+    作者 & 王文楠（金融学院）\\
+         & 李享晨（金融学院）\\
+         & 何卓宁（创新创业教育学院）\\
+    指导教师 & 许中国 \\
+  \end{tabular}\par}
+  \vfill
+  {\small 论文修订稿 v2.0\quad 2026 年 11 月 20 日\par}
+  \vspace{9mm}
+\end{titlepage}
+
+\pagenumbering{Roman}
+\hypersetup{pageanchor=true}
+\section*{摘要}
+\addcontentsline{toc}{section}{摘要}
+本文使用 2001 年第一季度至 2026 年第三季度的 103 期《中国货币政策执行报告》，结合申万一级行业指数，比较词典法与大语言模型评分，并采用事件研究、逐季横截面预测、行业交互模型和组合回测。主词典与 15 期归档抽检分值的 Pearson 相关约为 0.70。每期仅有一份评分，评分过程与独立性仍待核验。短窗关联在多重检验校正后缺乏统计支持。以报告期下一季度收益为目标，文本模型与无文本基准在共同测试样本上的样本外 $R^2$ 分别为 $-0.60$ 和 $-0.56$。改用发布后首个完整季度收益，并仅以预测时已实现收益训练后，文本模型仍弱于基准。行业特征难以解释敏感度差异，大语言模型的排序表现也未转化为稳定增量。现有证据不足以支持将报告情绪单独用于行业配置。
+
+\noindent\textbf{关键词：} 货币政策执行报告；文本情绪；行业收益；样本外预测；大语言模型；事件研究
+
+\vspace{0.9em}
+\begin{center}
+  {\large\bfseries Textual Sentiment in China's Monetary Policy Reports and A-Share Industry Returns}\par
+  \vspace{0.2em}
+  {\normalsize Measurement, Prediction, and Industry Heterogeneity}
+\end{center}
+\noindent\textbf{Abstract.}
+Can the tone of the People's Bank of China's Monetary Policy Reports improve forecasts of A-share industry returns? We compare dictionary and large language model scores for 103 quarterly reports and evaluate them using event studies, sequential cross-sectional forecasts, industry regressions, and long-short portfolios. The main dictionary score has a Pearson correlation of about 0.70 with archived scores for 15 reports. Each report has a single rating, and the scoring procedure and independence remain unverified. Short-window associations do not survive multiple-testing corrections. When targeting returns in the quarter after the reporting period, the text-augmented model and text-free baseline have out-of-sample $R^2$ values of $-0.60$ and $-0.56$, respectively, on a common test sample. The text-augmented model still underperforms when forecasts target the first full quarter after publication and fitting uses only previously realized returns. Industry characteristics do not reliably explain differences in sensitivity, and the large language model yields no consistent improvement over the dictionary. The evidence does not support using report tone as a standalone industry allocation signal.
+
+\noindent\textbf{Keywords:} monetary policy reports, textual sentiment, industry returns, out-of-sample prediction, large language models, event study
+
+\clearpage
+\tableofcontents
+\vspace{1em}
+\begingroup
+\small
+\setlength{\columnsep}{1.7em}
+\begin{multicols}{2}
+  \listoffigures
+  \listoftables
+\end{multicols}
+\endgroup
+\clearpage
+\pagenumbering{arabic}
+
+\input{introduction}
+\input{methods}
+\input{models}
+\FloatBarrier
+\input{conclusion}
+\FloatBarrier
+\clearpage
+\begingroup
+\renewcommand*{\bibfont}{\small}
+\printbibliography[heading=bibintoc,title={参考文献}]
+\endgroup
+\clearpage
+\input{appendix}
+\end{document}
