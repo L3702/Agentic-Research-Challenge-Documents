@@ -31,6 +31,14 @@ COLUMN_MAP = {
     "ci_high": "ci_high", "上限": "ci_high",
 }
 REQUIRED = ["setting", "beta", "ci_low", "ci_high"]
+BLOCK_LABELS = {
+    "event": ("事件窗 CAR 高-低差（市场模型，主设定 [0,+5]）",
+              "注：每个设定只改变一个主要条件；误差棒为 95% 置信区间，跨 0 表示该设定下不显著。"
+              "系数为高情绪组 − 低情绪组的事件窗 CAR 均值差。"),
+    "prediction": ("情绪暴露交互系数 β（Fama-MacBeth）",
+                   "注：每个设定只改变一个主要条件；误差棒为 95% 置信区间，跨 0 表示该设定下不显著。"
+                   "系数为 sent_exposure 设定下情绪暴露交互项的 FMB 均值。"),
+}
 
 
 def find_input():
@@ -41,7 +49,7 @@ def find_input():
     return None
 
 
-def load(path=None):
+def load(path=None, block="event"):
     p = path or find_input()
     if not p:
         sys.exit(f"[Fig20] 找不到输入文件 {INPUT_NAME}；已查找：" + ", ".join(SEARCH_DIRS))
@@ -55,10 +63,15 @@ def load(path=None):
     df = df.dropna(subset=["beta", "ci_low", "ci_high"]).reset_index(drop=True)
     if df.empty:
         sys.exit("[Fig20] 有效行（beta 与置信区间非空）为 0。")
+    if "block" in df.columns:
+        df = df[df["block"] == block].reset_index(drop=True)
+        df = df.drop(columns=["block"])
+    if df.empty:
+        sys.exit(f"[Fig20] block={block} 的有效行为 0。")
     return df
 
 
-def plot(df, outdir=None):
+def plot(df, outdir=None, block="event"):
     # 森林图自上而下阅读：最后一行画在最上方
     d = df.iloc[::-1].reset_index(drop=True)
     y = np.arange(len(d))
@@ -70,18 +83,19 @@ def plot(df, outdir=None):
     ax.axvline(0, color=PALETTE["neutral"], lw=0.9, ls="--", alpha=0.7)
     ax.set_yticks(y)
     ax.set_yticklabels(d["setting"], fontsize=9)
-    ax.set_xlabel("核心系数 β（情绪 → 行业收益）")
+    xlabel, note = BLOCK_LABELS.get(block, BLOCK_LABELS["event"])
+    ax.set_xlabel(xlabel)
     ax.set_ylabel("稳健性设定")
-    ax.set_title("图 20　稳健性检验：不同设定下的核心系数（E8）", fontsize=12, pad=12)
+    ax.set_title(f"图 20　稳健性检验：不同设定下的核心系数（E8，{block} 块）", fontsize=12, pad=12)
     ax.grid(axis="x", alpha=0.4)
     ax.set_axisbelow(True)
-    # 标注主设定（输入第一行）
-    main_setting = str(df["setting"].iloc[0])
-    ax.text(0.99, 0.02, f"主设定：{main_setting}", transform=ax.transAxes,
-            ha="right", va="bottom", fontsize=8.4, color=PALETTE["secondary"])
-    ax.text(0.01, -0.12,
-            "注：每个设定只改变一个主要条件；误差棒为 95% 置信区间，跨 0 表示该设定下不显著。",
-            transform=ax.transAxes, fontsize=8.2, color=PALETTE["neutral"])
+    # 标注主设定（输入第一行）的系数与置信区间
+    main = df.iloc[0]
+    ax.text(0.99, 0.02,
+            f"主设定：β={main['beta']:.4f}，95% CI [{main['ci_low']:.4f}, {main['ci_high']:.4f}]",
+            transform=ax.transAxes, ha="right", va="bottom", fontsize=8.4,
+            color=PALETTE["secondary"])
+    ax.text(0.01, -0.12, note, transform=ax.transAxes, fontsize=8.2, color=PALETTE["neutral"])
     _save(fig, "fig20_robustness.png", outdir)
 
 
@@ -113,12 +127,14 @@ def _self_test():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--block", default="event", choices=sorted(BLOCK_LABELS),
+                    help="E8 稳健性块：event（事件研究，默认）或 prediction（横截面预测）")
     args = ap.parse_args()
     if args.self_test:
         tmp = _self_test()
         print(f"self-test ok: {tmp}")
         return
-    plot(load())
+    plot(load(block=args.block), block=args.block)
 
 
 if __name__ == "__main__":

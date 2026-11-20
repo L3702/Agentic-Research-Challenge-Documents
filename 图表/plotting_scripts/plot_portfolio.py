@@ -35,7 +35,7 @@ COLUMN_MAP = {
 }
 REQUIRED = ["period", "long", "short", "ls", "benchmark"]
 SERIES = [("long", "多头（情绪最高 5 行业）"), ("short", "空头（情绪最低 5 行业）"),
-          ("ls", "多空组合（多 - 空）"), ("benchmark", "基准（行业等权 / 市场）")]
+          ("ls", "多空组合（多 - 空，净成本）"), ("benchmark", "基准（行业等权）")]
 
 
 def find_input():
@@ -101,7 +101,8 @@ def plot(df, outdir=None):
         ax.xaxis.set_major_locator(mdates.YearLocator(2))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     ax.text(0.01, -0.13,
-            f"注：输入列识别为{mode}；组合为季度调仓的等权多空规则，不含交易成本，不作为可执行策略。",
+            f"注：输入列识别为{mode}；多空组合为季度调仓的等权规则，ls 已扣单边 10bp 交易成本；"
+            "研究组合，不作为可执行策略。",
             transform=ax.transAxes, fontsize=8.2, color=PALETTE["neutral"])
     _save(fig, "fig18_portfolio_equity.png", outdir)
 

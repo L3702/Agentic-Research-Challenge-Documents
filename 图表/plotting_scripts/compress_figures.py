@@ -23,7 +23,20 @@ SHEET_PAD = 16
 SHEET_TITLE_H = 40
 
 
+FONT_CANDIDATES = [
+    r"C:\Windows\Fonts\msyh.ttc",
+    r"C:\Windows\Fonts\simhei.ttf",
+    r"C:\Windows\Fonts\Deng.ttf",
+]
+
+
 def load_font(size):
+    for path in FONT_CANDIDATES:
+        if os.path.exists(path):
+            try:
+                return ImageFont.truetype(path, size)
+            except Exception:  # noqa: BLE001
+                continue
     for name in ("Microsoft YaHei", "SimHei", "Arial"):
         try:
             return ImageFont.truetype(name, size)
@@ -74,6 +87,8 @@ def main():
     files = sorted(f for f in os.listdir(PREVIEW_DIR) if f.startswith("fig"))
     make_sheet(files[:6], "Fig 1-6 总览（压缩预览）", "sheet_a.png")
     make_sheet(files[6:12], "Fig 7-12 总览（压缩预览）", "sheet_b.png")
+    if len(files) > 12:
+        make_sheet(files[12:20], "Fig 13-20 总览（压缩预览）", "sheet_c.png")
 
 
 if __name__ == "__main__":

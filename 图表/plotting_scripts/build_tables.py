@@ -17,21 +17,26 @@ import pandas as pd
 from _style import DATA_DIR, PROJECT_ROOT, TABLE_DIR
 
 LIT_PATH = os.path.join(PROJECT_ROOT, "documents", "Literature_Matrix.xlsx")
+EXP_DIR = os.path.join(PROJECT_ROOT, "experiments")
 
 START = pd.Timestamp("2014-02-21")   # 28 个可比行业统一起点
 ANN = 252
 EXCLUDE = ["石油石化", "环保", "美容护理"]   # 2021-12-13 后新分类，不纳入主口径
 RF_NOTE = "无风险利率数据尚未获取（资料抓取清单 D4），夏普比率暂以 0 计算，仅为相对比较，待补。"
+PRIMARY_DICT = "ntusd_simplified"
+SPLIT_LABEL = {"validation": "验证期 2016Q1–2020Q4", "test": "测试期 2021Q1–2026Q3"}
+DICT_LABEL = {"none": "无文本", "ntusd_simplified": "NTUSD 简体", "dlut": "DLUT",
+              "mpr_domain": "MPR 领域", "llm": "LLM", "ntusd_simplified+llm": "NTUSD 简体 + LLM"}
 
 
 # ---------------------------------------------------------------- 工具函数
 
 def df_to_md(df, float_fmt="{:.4f}"):
-    """把 DataFrame 渲染成 Markdown 表格，NaN 显示为空。"""
+    """把 DataFrame 渲染成 Markdown 表格，NaN 显示为 —。"""
     df = df.copy()
     for c in df.columns:
         if pd.api.types.is_float_dtype(df[c]):
-            df[c] = df[c].map(lambda v: "" if pd.isna(v) else float_fmt.format(v))
+            df[c] = df[c].map(lambda v: "—" if pd.isna(v) else float_fmt.format(v))
         else:
             df[c] = df[c].fillna("").astype(str).str.replace("\n", " ", regex=False)
     header = "| " + " | ".join(str(c) for c in df.columns) + " |"
@@ -351,6 +356,14 @@ def table08():
 
 # ---------------------------------------------------------------- Table 9-11
 
+def _exp_df(rel):
+    """读取 experiments/ 下的实验输出；缺失时返回 None，由调用方回退模板。"""
+    path = os.path.join(EXP_DIR, rel)
+    if not os.path.exists(path):
+        return None
+    return pd.read_csv(path)
+
+
 def write_template(stem, title, cols, note):
     full_cols = ["状态"] + cols
     df = pd.DataFrame([["模板，待数据"] + ["NA"] * len(cols)], columns=full_cols)
@@ -361,24 +374,149 @@ def write_template(stem, title, cols, note):
 
 
 def table09():
-    return write_template(
-        "table09_baseline_performance_template", "Table 9　Baseline 性能对比表",
-        ["模型", "情绪来源", "IC 均值", "ICIR", "OOS R²", "MAE", "样本外区间", "备注"],
-        "比较无文本 Baseline、词典情绪、LLM 情绪（及联合）的样本外表现，数据来自 E4/E6 输出。")
+    df = _exp_df(os.path.join("E6", "e6_llm_oos_metrics.csv"))
+    if df is None:
+        return write_template(
+            "table09_baseline_performance", "Table 9　Baseline 性能对比表",
+            ["模型", "情绪来源", "IC 均值", "ICIR", "OOS R²", "MAE", "样本外区间", "备注"],
+            "比较无文本 Baseline、词典情绪、LLM 情绪（及联合）的样本外表现，数据来自 E4/E6 输出。")
+    out = pd.DataFrame({
+        "模型": df["model"],
+        "情绪来源": df["dictionary"].map(DICT_LABEL).fillna(df["dictionary"]),
+        "样本外区间": df["split"].map(SPLIT_LABEL).fillna(df["split"]),
+        "期数": df["n_periods"],
+        "IC 均值": df["ic_mean"],
+        "ICIR": df["icir"],
+        "OOS R²": df["oos_r2"],
+        "MAE": df["mae"],
+    })
+    remarks = []
+    for _, r in df.iterrows():
+        if r["model"] == "baseline_notext":
+            remarks.append("Baseline（仅控制变量）")
+        elif pd.notna(r.get("mae_improvement_pct")):
+            remarks.append(f"MAE 相对 Baseline {r['mae_improvement_pct']:+.2f}%")
+        else:
+            remarks.append("")
+    out["备注"] = remarks
+    note = ("来源：`experiments/E6/e6_llm_oos_metrics.csv`（E6，与 E4 同面板、同划分；"
+            "测试期为主口径）。IC 为预测值与实际收益的横截面 Spearman 秩相关；"
+            "ICIR = IC 均值 / IC 标准差；OOS R² 以各目标季截面均值为基准；"
+            "MAE 为行业-季度面板平均绝对误差，备注中相对 Baseline 的百分比为负表示误差更低。"
+            "LLM 为 qwen3.8-27b、Prompt v1、温度 0。")
+    write_table(out, "table09_baseline_performance", "Table 9　Baseline 性能对比表", note)
+    return out
 
 
 def table10():
-    return write_template(
-        "table10_ablation_template", "Table 10　消融实验表",
-        ["模型/设定", "去文本", "去控制变量", "去交互项", "IC 均值", "ICIR", "OOS R²", "备注"],
-        "逐项剔除情绪、控制变量或交互项，数据来自 E4/E5 输出。")
+    e4 = _exp_df(os.path.join("E4", "e4_oos_metrics.csv"))
+    panel = _exp_df(os.path.join("E4", "e4_panel_robustness.csv"))
+    if e4 is None or panel is None:
+        return write_template(
+            "table10_ablation", "Table 10　消融实验表",
+            ["设定", "情绪处理", "样本", "IC 均值", "ICIR", "OOS R²", "MAE", "备注"],
+            "逐项剔除情绪、控制变量或交互项，数据来自 E4/E5 输出。")
+    rows = []
+    for split in ("test", "validation"):
+        for model, label, dict_filter in (
+            ("sentiment", "完整模型 sent_exposure", PRIMARY_DICT),
+            ("baseline_notext", "去文本 baseline_notext", "none"),
+        ):
+            r = e4[(e4["model"] == model) & (e4["split"] == split)
+                   & (e4["dictionary"] == dict_filter)]
+            if r.empty:
+                continue
+            r = r.iloc[0]
+            rows.append({
+                "设定": label,
+                "情绪处理": "情绪 × 滚动暴露交互" if model == "sentiment" else "无文本（仅控制变量）",
+                "样本": SPLIT_LABEL.get(split, split),
+                "IC 均值": r["ic_mean"], "ICIR": r["icir"], "OOS R²": r["oos_r2"], "MAE": r["mae"],
+                "备注": "主词典 ntusd_simplified" if model == "sentiment" else "Baseline",
+            })
+    p1 = panel[(panel["spec"] == "panel_industry_fe") & (panel["term"] == "sentiment_z")
+               & (panel["dictionary"] == PRIMARY_DICT)]
+    if not p1.empty:
+        r = p1.iloc[0]
+        rows.append({
+            "设定": "面板：行业固定效应",
+            "情绪处理": "去交互项（仅情绪主效应）",
+            "样本": "全样本面板 2001Q2–2026Q3",
+                "IC 均值": np.nan, "ICIR": np.nan, "OOS R²": np.nan, "MAE": np.nan,
+            "备注": f"sentiment_z 系数 {r['estimate']:.5f}，聚类 t={r['t_value']:.2f}，N={int(r['n_obs'])}",
+        })
+    p2 = panel[(panel["spec"] == "panel_time_fe_interact") & (panel["dictionary"] == PRIMARY_DICT)]
+    if not p2.empty:
+        parts = [f"{t} {e:.5f}（t={tv:.2f}）" for t, e, tv
+                 in zip(p2["term"], p2["estimate"], p2["t_value"])]
+        rows.append({
+            "设定": "面板：时间固定效应",
+            "情绪处理": "情绪 × 行业特征交互",
+            "样本": "全样本面板 2001Q2–2026Q3",
+            "IC 均值": np.nan, "ICIR": np.nan, "OOS R²": np.nan, "MAE": np.nan,
+            "备注": "；".join(parts) + "，均不显著",
+        })
+    out = pd.DataFrame(rows, columns=["设定", "情绪处理", "样本", "IC 均值", "ICIR", "OOS R²", "MAE", "备注"])
+    note = ("来源：`experiments/E4/e4_oos_metrics.csv`、`e4_panel_robustness.csv`。"
+            "「去控制变量」消融实验未设定、未运行，故不列占位结果；"
+            "面板行报告系数与聚类 t 值，无 IC 口径，以 — 表示。")
+    write_table(out, "table10_ablation", "Table 10　消融实验表", note)
+    return out
 
 
 def table11():
-    return write_template(
-        "table11_statistical_results_template", "Table 11　统计分析结果表",
-        ["检验", "系数", "标准误", "t 值", "p 值", "R²", "样本量", "备注"],
-        "Fama-MacBeth 系数、事件研究 CAR 检验等，数据来自 E4/E3 输出。")
+    rows = []
+    fmb = _exp_df(os.path.join("E4", "e4_fmb_results.csv"))
+    if fmb is not None:
+        f = fmb[fmb["is_sentiment"] == 1]
+        for _, r in f.iterrows():
+            rows.append({
+                "检验": f"Fama-MacBeth 情绪暴露交互（{r['dictionary']}）",
+                "系数": r["mean"], "标准误": r["std"] / np.sqrt(r["n_periods"]),
+                "t 值": r["t_fmb"], "p 值": r["p_fmb"], "R²": r["mean_r2"],
+                "样本量": f"{int(r['n_periods'])} 期 × 平均 {r['mean_n']:.1f} 行业",
+                "备注": f"NW t={r['t_nw']:.2f}，p={r['p_nw']:.4f}",
+            })
+    car = _exp_df(os.path.join("E3", "e3_car_by_sentiment.csv"))
+    if car is not None:
+        picks = [("all", 1, "全样本"), ("low", 1, "低情绪组"),
+                 ("high_minus_low", 1, "高−低差值"), ("all", 10, "全样本")]
+        for g, w, glabel in picks:
+            r = car[(car["model"] == "market") & (car["group"] == g) & (car["event_window"] == w)]
+            if r.empty:
+                continue
+            r = r.iloc[0]
+            rows.append({
+                "检验": f"事件研究 CAR（市场模型，[0,+{w}]，{glabel}）",
+                "系数": r["mean_car"], "标准误": r["std_car"] / np.sqrt(r["n_periods"]),
+                "t 值": r["t_stat"], "p 值": r["p_value"], "R²": np.nan,
+                "样本量": f"{int(r['n_periods'])} 期",
+                "备注": f"Bootstrap 95% CI [{r['boot_ci_low']:.4f}, {r['boot_ci_high']:.4f}]",
+            })
+    panel = _exp_df(os.path.join("E4", "e4_panel_robustness.csv"))
+    if panel is not None:
+        r = panel[(panel["spec"] == "panel_industry_fe") & (panel["term"] == "sentiment_z")
+                  & (panel["dictionary"] == PRIMARY_DICT)]
+        if not r.empty:
+            r = r.iloc[0]
+            rows.append({
+                "检验": "面板行业固定效应（情绪主效应）",
+                "系数": r["estimate"], "标准误": r["std_error"], "t 值": r["t_value"],
+                "p 值": r["p_value"], "R²": r["r2"], "样本量": f"{int(r['n_obs'])} 观测",
+                "备注": f"聚类维度：{r['cluster']}",
+            })
+    if not rows:
+        return write_template(
+            "table11_statistical_results", "Table 11　统计分析结果表",
+            ["检验", "系数", "标准误", "t 值", "p 值", "R²", "样本量", "备注"],
+            "Fama-MacBeth 系数、事件研究 CAR 检验等，数据来自 E4/E3 输出。")
+    out = pd.DataFrame(rows, columns=["检验", "系数", "标准误", "t 值", "p 值", "R²", "样本量", "备注"])
+    note = ("来源：`experiments/E4/e4_fmb_results.csv`、`experiments/E3/e3_car_by_sentiment.csv`、"
+            "`experiments/E4/e4_panel_robustness.csv`。FMB 标准误 = 系数时序标准差 / √期数；"
+            "事件研究标准误 = CAR 时序标准差 / √期数；面板 t 值为行业代码聚类。"
+            "所有结果为描述性统计，不构成因果解释。")
+    write_table(out, "table11_statistical_results", "Table 11　统计分析结果表", note)
+    return out
 
 
 # ---------------------------------------------------------------- main

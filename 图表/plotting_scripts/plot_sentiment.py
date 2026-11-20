@@ -77,7 +77,7 @@ def plot(df, outdir=None):
     ax1.fill_between(x, df["sentiment"], 0,
                      where=(df["sentiment"] < 0), color=PALETTE["secondary"],
                      alpha=0.25, interpolate=True)
-    ax1.set_ylabel("情绪得分（词典法，标准化）")
+    ax1.set_ylabel("情绪得分（净正词率，NTUSD 简体）")
     ax1.set_title("图 13　MPR 文本情绪得分与词覆盖率时间序列", fontsize=12, pad=12)
     ax1.legend(loc="upper left", fontsize=9)
     ax1.grid(alpha=0.35)
@@ -86,15 +86,17 @@ def plot(df, outdir=None):
     ax2.bar(x, df["coverage"], width=20 if is_date else 0.6,
             color=CAT_COLORS[2], alpha=0.85)
     ax2.set_ylabel("正负词覆盖率")
-    ax2.set_xlabel("期次")
+    ax2.set_xlabel("")
     ax2.grid(alpha=0.35)
     ax2.set_axisbelow(True)
     if is_date:
         ax2.xaxis.set_major_locator(mdates.YearLocator(2))
         ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    ax2.text(0.01, -0.32,
-             "注：情绪得分口径由 E1 固定（词典版本、停用词表一致）；覆盖率 = 命中正负词数 / 有效词数。",
-             transform=ax2.transAxes, fontsize=8.2, color=PALETTE["neutral"])
+    fig.text(0.01, -0.02,
+             "注：情绪得分 = (正词加权 − 负词加权) / (正词加权 + 负词加权)，由 E1 固定（NTUSD 简体，停用词表一致）；"
+             "覆盖率 = 命中正负词数 / 有效词数；横轴为 MPR 发布日期。",
+             fontsize=8.2, color=PALETTE["neutral"])
+    fig.subplots_adjust(bottom=0.15)
     _save(fig, "fig13_sentiment.png", outdir)
 
 

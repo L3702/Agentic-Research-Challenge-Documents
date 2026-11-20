@@ -1,8 +1,8 @@
 # Figure & Table Catalog：图表目录与数据来源
 
-- 生成时间：2026-11-18 16:53
-- 配套：`FIGURE_TABLE_PLAN.md`、`图表/figures/`、`图表/tables/`、`图表/plotting_scripts/`
-- 状态口径：**已生成** = 工作区存在真实文件；**待数据** = 脚本已就位，输入 CSV 就绪后即可出图，本次不生成图片。
+- 生成时间：2026-11-18 16:53；**更新：2026-11-20 14:34**
+- 配套：`FIGURE_TABLE_PLAN.md`、`图表/figures/`、`图表/figures_preview/`、`图表/tables/`、`图表/results/`、`图表/plotting_scripts/`
+- 状态口径：**已生成** = 工作区存在真实文件且输入为真实实验输出；**模板** = 结构就绪、数值待填；本次更新将 Fig 13-20 与 Table 9-11 从待数据/模板改为已生成。
 
 ## 1. 图（Fig 1-20）
 
@@ -20,14 +20,14 @@
 | Fig 10 | fig10_correlation.png | fig10_correlation.py | data/external/sw_industries/sw_industry_daily.csv | 2026-11-18 08:47 | 已生成 | 28 行业日收益相关系数热力图 |
 | Fig 11 | fig11_volatility.png | fig11_volatility.py | data/external/sw_industries/sw_industry_daily.csv | 2026-11-18 08:47 | 已生成 | 行业年化波动率排序 |
 | Fig 12 | fig12_benchmark.png | fig12_benchmark.py | data/external/benchmark/benchmark_daily.csv | 2026-11-18 08:47 | 已生成 | 沪深300 / 中证全指归一化走势 |
-| Fig 13 | — | plot_sentiment.py | sentiment_dictionary_full.csv（未获取） | — | 待数据 | MPR 情绪得分时间序列与覆盖率 |
-| Fig 14 | — | plot_event_study.py | e3_car_by_sentiment.csv（未产生） | — | 待数据 | 高/中/低情绪组事件窗 CAR 曲线 |
-| Fig 15 | — | plot_event_heatmap.py | e3_event_results.csv（未产生） | — | 待数据 | 行业 × 事件窗 CAR 热力图 |
-| Fig 16 | — | plot_fmb.py | e4_coefficient_series.csv（未产生） | — | 待数据 | Fama-MacBeth 情绪系数时序 |
-| Fig 17 | — | plot_oos.py | e4_oos_metrics.csv（未产生） | — | 待数据 | 样本外 IC / ICIR / OOS R² |
-| Fig 18 | — | plot_portfolio.py | e7_portfolio.csv（未产生） | — | 待数据 | 多空组合累计净值 |
-| Fig 19 | — | plot_heterogeneity.py | e5_heterogeneity.csv（未产生） | — | 待数据 | 行业敏感度排序与置信区间 |
-| Fig 20 | — | plot_robustness.py | e8_robustness_summary.csv（未产生） | — | 待数据 | 稳健性森林图 |
+| Fig 13 | fig13_sentiment.png | plot_sentiment.py | 图表/results/sentiment_dictionary_full.csv | 2026-11-20 14:33 | 已生成 | MPR 情绪得分时间序列与覆盖率 |
+| Fig 14 | fig14_event_study_car.png | plot_event_study.py | 图表/results/e3_car_by_sentiment.csv | 2026-11-20 14:33 | 已生成 | 高/中/低情绪组事件窗 CAR 曲线 |
+| Fig 15 | fig15_event_heatmap.png | plot_event_heatmap.py | 图表/results/e3_event_results.csv | 2026-11-20 14:33 | 已生成 | 行业 × 事件窗 CAR 热力图 |
+| Fig 16 | fig16_fmb_coefficient.png | plot_fmb.py | 图表/results/e4_coefficient_series.csv | 2026-11-20 14:33 | 已生成 | Fama-MacBeth 情绪系数时序 |
+| Fig 17 | fig17_oos_metrics.png | plot_oos.py | 图表/results/e4_oos_metrics.csv | 2026-11-20 14:33 | 已生成 | 样本外 IC / ICIR / OOS R² |
+| Fig 18 | fig18_portfolio_equity.png | plot_portfolio.py | 图表/results/e7_portfolio.csv | 2026-11-20 14:33 | 已生成 | 多空组合累计净值 |
+| Fig 19 | fig19_heterogeneity.png | plot_heterogeneity.py | 图表/results/e5_heterogeneity.csv | 2026-11-20 14:33 | 已生成 | 行业敏感度排序与置信区间 |
+| Fig 20 | fig20_robustness.png | plot_robustness.py | 图表/results/e8_robustness_summary.csv | 2026-11-20 14:33 | 已生成 | 稳健性森林图 |
 
 ## 2. 表（Table 1-11）
 
@@ -41,9 +41,9 @@
 | Table 6 | table06_baseline_design.md/.csv | build_tables.py | METHOD_PLAN.md 第 6 节 | 2026-11-18 08:53 | 已生成 | Baseline 定义、作用、选择理由 |
 | Table 7 | table07_robustness_design.md/.csv | build_tables.py | EXPERIMENT_PLAN.md E8 | 2026-11-18 08:53 | 已生成 | 稳健性检验项、改变设定、评价指标 |
 | Table 8 | table08_literature_matrix.md/.csv | build_tables.py | documents/Literature_Matrix.xlsx | 2026-11-18 08:53 | 已生成 | 38 篇文献核心结论与可迁移方法摘要 |
-| Table 9 | table09_baseline_performance_template.md/.csv | build_tables.py | E4/E6 输出（未产生） | 2026-11-18 08:53 | 已生成 | Baseline 性能对比（无文本/词典/LLM）模板 |
-| Table 10 | table10_ablation_template.md/.csv | build_tables.py | E4/E5 输出（未产生） | 2026-11-18 08:53 | 已生成 | 消融实验模板 |
-| Table 11 | table11_statistical_results_template.md/.csv | build_tables.py | E4 输出（未产生） | 2026-11-18 08:53 | 已生成 | 统计分析结果（FMB 系数/t/R²/样本量）模板 |
+| Table 9 | table09_baseline_performance.md/.csv | build_tables.py | E6/e6_llm_oos_metrics.csv、E4/e4_oos_metrics.csv | 2026-11-20 14:33 | 已生成 | Baseline 性能对比（无文本/词典/LLM/联合） |
+| Table 10 | table10_ablation.md/.csv | build_tables.py | E4/e4_oos_metrics.csv、E4/e4_panel_robustness.csv | 2026-11-20 14:33 | 已生成 | 消融实验（完整模型 vs Baseline；面板交互） |
+| Table 11 | table11_statistical_results.md/.csv | build_tables.py | E4/e4_fmb_results.csv、E3/e3_car_by_sentiment.csv、E4/e4_panel_robustness.csv | 2026-11-20 14:33 | 已生成 | 统计分析结果（FMB 系数/t/R²/样本量） |
 
 ## 3. 数据源
 
@@ -53,11 +53,13 @@
 | 市场基准日行情 | data/external/benchmark/benchmark_daily.csv | 见文件 | Fig 12 |
 | 文献矩阵 | documents/Literature_Matrix.xlsx | 38 篇 | Fig 5/6/7、Table 8 |
 | 抓取台账 | logs/data_fetch_log.md | 2026-11-17 | 数据状态核查 |
-| MPR 全文 / 情绪词典 / 宏观控制变量 | 未获取 | — | Fig 13-20、Table 9-11 |
+| 实验输入 | 图表/results/（E1/E3/E4/E5/E7/E8 输出副本） | 2001Q2-2026Q3 等 | Fig 13-20、Table 9-11 |
+| MPR 全文 / 情绪词典 | 人民银行官网 / 公开词典仓库 | 103 期 / 3 套词典 | Fig 13、Table 9 |
+| 宏观 / 利率 / 外部因子 | akshare 公开接口 / CH3 镜像 | 见 `数据来源说明.md` 第 2.6 节 | E3/E4/E5/E7 |
 
 ## 4. 质量核查
 
-- 核查脚本：`图表/plotting_scripts/verify_figures_tables.py`，报告：`图表/logs/figure_table_qc.md`。
+- 核查脚本：`图表/plotting_scripts/verify_figures_tables.py`，报告：`图表/logs/figure_table_qc.md`（2026-11-20 14:33 复核通过）。
 - 口径：收益计算顺序为**全样本计算日收益后按 2014-02-21 过滤**；年化 = 复利；波动 = 日标准差 × √252；夏普按无风险利率 0 计算（待补，见表注）。
 - 结果：Table 4/5 与独立重算一致（28 行业，抽检对照见 qc 报告）；fig08-11 脚本均引用真实行情 CSV；未发现截断收益轴或选择性展示。
 
@@ -67,7 +69,8 @@
 python 图表/plotting_scripts/fetch_data.py          # 抓取公开行情（已执行）
 python 图表/plotting_scripts/build_tables.py        # 生成 图表/tables/（Table 1-11）
 python 图表/plotting_scripts/fig01_*.py ... fig12_*.py   # 生成 图表/figures/ 已交付图
-python 图表/plotting_scripts/plot_sentiment.py ... plot_robustness.py  # 待数据 CSV 就绪后出图
+python 图表/plotting_scripts/build_experiment_inputs.py   # 由 E1/E3/E4/E5/E7/E8 输出生成 图表/results/（已执行）
+python 图表/plotting_scripts/plot_sentiment.py ... plot_robustness.py  # Fig 13-20 出图（已执行）
 python 图表/plotting_scripts/verify_figures_tables.py      # 一致性核查
 python 图表/plotting_scripts/compress_figures.py    # 生成压缩预览与总览
 ```

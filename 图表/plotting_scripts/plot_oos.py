@@ -32,8 +32,8 @@ COLUMN_MAP = {
     "oos_r2": "oos_r2", "OOS_R2": "oos_r2", "oos_r²": "oos_r2",
 }
 REQUIRED = ["period", "ic", "icir", "oos_r2"]
-PANELS = [("ic", "IC（信息系数）"), ("icir", "ICIR（IC 均值 / IC 标准差）"),
-          ("oos_r2", "样本外 R²")]
+PANELS = [("ic", "IC（横截面 Rank IC）"), ("icir", "ICIR（5 期滚动）"),
+          ("oos_r2", "样本外 R²（逐季）")]
 
 
 def find_input():
@@ -85,7 +85,8 @@ def plot(df, outdir=None):
     axes[-1].set_xlabel("期次")
     axes[0].set_title("图 17　样本外预测指标时序（时间顺序划分，无未来信息）", fontsize=12, pad=12)
     fig.text(0.01, -0.02,
-             "注：IC 为情绪得分与下一期行业收益的横截面 Rank IC；样本外 R² 相对无文本 Baseline 计算。",
+             "注：IC 为 E4 样本外预测值与实际收益的逐季横截面 Rank IC；OOS R² 以各季截面均值为基准；"
+             "ICIR 为 5 期滚动 IC 均值 / 标准差。汇总口径见 Table 9。",
              fontsize=8.2, color=PALETTE["neutral"])
     _save(fig, "fig17_oos_metrics.png", outdir)
 

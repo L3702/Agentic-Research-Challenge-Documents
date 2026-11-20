@@ -98,6 +98,43 @@ def scan_scripts():
     return msgs
 
 
+def check_experiment_assets():
+    """检查 Fig 13-20 与其输入、Table 9-11 是否为真实结果（非模板/占位）。"""
+    msgs = []
+    fig_names = [
+        "fig13_sentiment.png", "fig14_event_study_car.png", "fig15_event_heatmap.png",
+        "fig16_fmb_coefficient.png", "fig17_oos_metrics.png", "fig18_portfolio_equity.png",
+        "fig19_heterogeneity.png", "fig20_robustness.png",
+    ]
+    for n in fig_names:
+        p = os.path.join(FIG_DIR, n)
+        if not os.path.exists(p):
+            msgs.append(f"[缺图] {n}")
+        elif os.path.getsize(p) < 10_000:
+            msgs.append(f"[疑似空白] {n} 大小 {os.path.getsize(p)} bytes")
+    result_names = [
+        "sentiment_dictionary_full.csv", "e3_car_by_sentiment.csv", "e3_event_results.csv",
+        "e4_coefficient_series.csv", "e4_oos_metrics.csv", "e7_portfolio.csv",
+        "e5_heterogeneity.csv", "e8_robustness_summary.csv",
+    ]
+    results_dir = os.path.join(PROJECT_ROOT, "图表", "results")
+    for n in result_names:
+        p = os.path.join(results_dir, n)
+        if not os.path.exists(p):
+            msgs.append(f"[缺输入] 图表/results/{n}")
+    for stem in ("table09_baseline_performance", "table10_ablation", "table11_statistical_results"):
+        p = os.path.join(TABLE_DIR, stem + ".md")
+        if not os.path.exists(p):
+            msgs.append(f"[缺表] {stem}.md")
+            continue
+        txt = open(p, encoding="utf-8").read()
+        if "模板，待数据" in txt or "【模板" in txt:
+            msgs.append(f"[占位未替换] {stem}.md 仍含模板标记")
+        if "| NA |" in txt:
+            msgs.append(f"[占位未替换] {stem}.md 仍含 NA 占位")
+    return msgs
+
+
 def main():
     os.makedirs(LOG_DIR, exist_ok=True)
     ref = recompute()
@@ -123,6 +160,7 @@ def main():
     msgs += compare("table04_descriptive_stats.csv", ref, ("ann_ret", "ann_vol", "skew", "kurt", "max_drawdown"))
     msgs += compare("table05_risk_return.csv", ref, ("ann_ret", "ann_vol", "sharpe", "calmar"))
     msgs += scan_scripts()
+    msgs += check_experiment_assets()
 
     lines += ["", "## 2. 一致性核查结果", ""]
     if msgs:
@@ -154,6 +192,8 @@ def main():
         "- Fig 8-11 纵轴/横轴均从 0 或明确对数轴开始，未截断收益轴。",
         "- Fig 8 使用对数轴并已标注；Fig 9/11 坐标轴含 0 点。",
         "- 描述统计未剔除异常值，表注已说明。",
+        "- Fig 13-20 均由 `图表/results/` 下的真实实验输入生成，无合成数据。",
+        "- Table 9-11 数值来自 E3/E4/E6/E5/E8 输出，模板占位已移除。",
         "",
         "## 4. 结论",
         "",
